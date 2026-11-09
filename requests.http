@@ -1,0 +1,72 @@
+# Sample requests for the finance tracker API.
+# Install the VS Code extension "REST Client" (by Huachao Mao), start the
+# server with `npm run dev`, then click "Send Request" above any request.
+
+@baseUrl = http://localhost:3000
+
+### Is the server alive?
+GET {{baseUrl}}/health
+
+### Add income (amounts are in cents: 300000 = $3,000.00)
+POST {{baseUrl}}/transactions
+Content-Type: application/json
+
+{
+  "type": "income",
+  "amountCents": 300000,
+  "category": "salary",
+  "date": "2026-11-01"
+}
+
+### Add an expense (no date → defaults to today)
+POST {{baseUrl}}/transactions
+Content-Type: application/json
+
+{
+  "type": "expense",
+  "amountCents": 1250,
+  "category": "groceries",
+  "description": "milk & eggs"
+}
+
+### List all transactions (newest first)
+GET {{baseUrl}}/transactions
+
+### List only one month
+GET {{baseUrl}}/transactions?month=2026-11
+
+### Get one transaction by id
+GET {{baseUrl}}/transactions/1
+
+### Replace a transaction (send every field)
+PUT {{baseUrl}}/transactions/2
+Content-Type: application/json
+
+{
+  "type": "expense",
+  "amountCents": 2000,
+  "category": "groceries",
+  "description": "milk, eggs, bread",
+  "date": "2026-11-09"
+}
+
+### Delete a transaction
+DELETE {{baseUrl}}/transactions/2
+
+### Totals for everything
+GET {{baseUrl}}/summary
+
+### Totals for one month
+GET {{baseUrl}}/summary?month=2026-11
+
+### ❌ Bad data → 400 with a list of every problem
+POST {{baseUrl}}/transactions
+Content-Type: application/json
+
+{
+  "type": "gift",
+  "amountCents": -5
+}
+
+### ❌ Unknown route → 404
+GET {{baseUrl}}/nope

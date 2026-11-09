@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    // Modern JavaScript output and module style
+    "target": "ES2022",
+    "module": "ESNext",
+    // "bundler" lets you write imports like './db' (no .js suffix needed)
+    "moduleResolution": "bundler",
+
+    // Catch as many mistakes as possible
+    "strict": true,
+
+    // tsx runs our code, so tsc only type-checks and never writes files
+    "noEmit": true,
+
+    // Load Node's built-in types (process, node:sqlite, ...)
+    "types": ["node"],
+
+    "skipLibCheck": true
+  },
+  "include": ["src"]
+}
