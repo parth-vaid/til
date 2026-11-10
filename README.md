@@ -2,6 +2,8 @@
 
 A small REST API to track income and expenses, built with **TypeScript**, **Express** and **SQLite**.
 
+Why it's built this way (every decision and the alternatives considered): see [docs/DESIGN.md](docs/DESIGN.md).
+
 ## Run it
 
 Requires Node.js 24+.
