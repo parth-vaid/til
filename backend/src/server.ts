@@ -4,6 +4,25 @@ import { router } from './routes';
 
 const app = express();
 const PORT = 3000;
+// The frontend is served from a different port, so to the browser it's a
+// different "origin". This is the only origin we allow to call the API.
+const FRONTEND_ORIGIN = 'http://localhost:5173';
+
+// CORS middleware: tells the browser the frontend may read our responses.
+// Placed first so every response carries these headers, errors included.
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', FRONTEND_ORIGIN);
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  // Before a POST/PUT with JSON, or a DELETE, the browser sends an OPTIONS
+  // "preflight" request to ask permission. The headers above are the answer,
+  // so reply "204 No Content" and don't run any route.
+  if (req.method === 'OPTIONS') {
+    res.status(204).end();
+    return;
+  }
+  next(); // not a preflight: carry on to the next middleware / route
+});
 
 // Middleware: runs before every route. Turns the JSON text in a request body
 // into a JS object at req.body.

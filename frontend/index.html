@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Finance Tracker</title>
+  <!-- defer: run app.js after the page below has been built, so it can find the elements -->
+  <script src="app.js" defer></script>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 860px; margin: 2rem auto; padding: 0 1rem; }
+    form { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: end; }
+    label { display: flex; flex-direction: column; font-size: 0.85rem; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { text-align: left; padding: 0.4rem; border-bottom: 1px solid #ddd; }
+    #message { color: crimson; }
+  </style>
+</head>
+<body>
+  <h1>Finance Tracker</h1>
+
+  <!-- 1. Month filter: becomes ?month=YYYY-MM on GET /transactions and GET /summary -->
+  <p>
+    <label>Month <input type="month" id="month"></label>
+    <button type="button" id="show-all">Show all</button>
+  </p>
+
+  <!-- 2. Totals from GET /summary, filled in by app.js -->
+  <p id="summary"></p>
+
+  <!-- 3. Add (POST) or edit (PUT) a transaction -->
+  <h2 id="form-title">Add a transaction</h2>
+  <form id="form">
+    <label>Type
+      <select name="type">
+        <option value="expense">Expense</option>
+        <option value="income">Income</option>
+      </select>
+    </label>
+    <label>Amount ($) <input name="amount" type="number" step="0.01" required></label>
+    <label>Category <input name="category" required></label>
+    <label>Description <input name="description"></label>
+    <label>Date <input name="date" type="date"></label>
+    <button type="submit">Save</button>
+    <button type="button" id="cancel" hidden>Cancel</button>
+  </form>
+  <p id="message"></p>
+
+  <!-- 4. List from GET /transactions; app.js adds one <tr> per transaction -->
+  <h2>Transactions</h2>
+  <table>
+    <thead>
+      <tr><th>Date</th><th>Type</th><th>Category</th><th>Description</th><th>Amount ($)</th><th></th></tr>
+    </thead>
+    <tbody id="rows"></tbody>
+  </table>
+</body>
+</html>
