@@ -76,9 +76,9 @@ async function refresh() {
     const summary = await api('GET', '/summary' + monthQuery());
 
     summaryText.textContent =
-      `Income $${toDollars(summary.incomeCents)} · ` +
-      `Expenses $${toDollars(summary.expenseCents)} · ` +
-      `Balance $${toDollars(summary.balanceCents)}`;
+      `Income ₹${toDollars(summary.incomeCents)} · ` +
+      `Expenses ₹${toDollars(summary.expenseCents)} · ` +
+      `Balance ₹${toDollars(summary.balanceCents)}`;
 
     rows.replaceChildren(); // remove the old rows
     for (const t of transactions) {
